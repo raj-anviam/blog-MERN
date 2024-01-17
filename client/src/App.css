@@ -5,6 +5,10 @@ body {
   color: #222;
 }
 
+a {
+  cursor: pointer;
+}
+
 main {
   padding: 10px;
   max-width: 960px;
@@ -94,6 +98,7 @@ input {
 }
 
 button {
+  cursor: pointer;
   width: 100%;
   display: block;
   background-color: #555;
@@ -145,4 +150,24 @@ div.post-page div.author {
 
 div.post-page div.content p {
   line-height: 1.6rem;
+}
+
+div.edit-row {
+  text-align: center;
+  margin: 20px 0;
+}
+
+div.post-page a.edit-btn {
+  background-color: #333;
+  color: #fff;
+  padding: 15px 30px;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+}
+
+a svg {
+  height: 20px;
 }
