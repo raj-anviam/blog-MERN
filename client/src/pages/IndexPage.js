@@ -8,7 +8,7 @@ export default function IndexPage() {
 
     useEffect(() => {
         axios.get('post').then(posts => {
-            setPosts(posts);
+            setPosts(posts.data);
         })
     }, [])
     

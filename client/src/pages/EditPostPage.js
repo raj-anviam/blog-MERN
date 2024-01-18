@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import 'react-quill/dist/quill.snow.css';
 import { Navigate, useParams } from "react-router-dom";
 import Editor from "../components/Editor";
+import axios from "axios";
 
 export default function EditPostPage() {
 
@@ -25,13 +26,9 @@ export default function EditPostPage() {
             data.set('file', files?.[0]);
         }
         
-        const response = await fetch('http://localhost:4000/post', {
-            method: 'PUT',
-            body: data,
-            credentials: 'include'
-        });
+        const response = await axios.put('http://localhost:4000/post', data);
 
-        if(response.ok) {
+        if(response.status == 200) {
             setRedirect(true);
         }
     }

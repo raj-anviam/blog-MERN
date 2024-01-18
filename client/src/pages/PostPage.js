@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import { UserContext } from "../UserContext"
 import { Link } from "react-router-dom"
+import axios from "axios";
 
 export default function PostPage() {
 
@@ -11,12 +12,9 @@ export default function PostPage() {
     const { userInfo }= useContext(UserContext);
 
     useEffect(() => {
-        fetch(`http://localhost:4000/post/${id}`)
-            .then(response => response.json()
-                .then(post => {
-                    setPost(post)
+        axios.get(`http://localhost:4000/post/${id}`).then(post => {
+                    setPost(post.data)
                 })
-            )
     }, [])
     
     if(!post) return '';

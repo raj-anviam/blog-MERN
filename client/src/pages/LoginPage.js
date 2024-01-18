@@ -15,7 +15,7 @@ export default function LoginPage() {
         const response = await axios.post('login', {username, password})
 
         if(response.status == 200) {
-            setUserInfo(response)
+            setUserInfo(response.data)
             setRedirect(true);
         }
         else {

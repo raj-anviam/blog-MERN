@@ -1,8 +1,6 @@
 import ReactQuill from "react-quill";
 
 export default function Editor(value, onChange) {
-    console.log(value, '----');
-
     const modules = {
         toolbar: [
           [{ 'header': [1, 2, false] }],
