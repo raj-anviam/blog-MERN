@@ -12,7 +12,7 @@ export default function LoginPage() {
     async function login(ev) {
         ev.preventDefault();
 
-        const response = await axios.post('login', {username, password, withCredentials: true})
+        const response = await axios.post('login', {username, password})
 
         if(response.status == 200) {
             setUserInfo(response)
