@@ -1,6 +1,7 @@
 import { useContext, useState } from "react"
 import { Navigate } from "react-router-dom"
 import { UserContext } from "../UserContext";
+import axios from "axios";
 
 export default function LoginPage() {
     let [username, setUsername] = useState('');
@@ -11,18 +12,11 @@ export default function LoginPage() {
     async function login(ev) {
         ev.preventDefault();
 
-        const response = await fetch('http://localhost:4000/login', {
-            method: 'POST',
-            body: JSON.stringify({username, password}),
-            headers: {'Content-Type': 'application/json'},
-            credentials: 'include',
-        })
+        const response = await axios.post('login', {username, password, withCredentials: true})
 
-        if(response.ok) {
-            response.json().then(userInfo => {
-                setUserInfo(userInfo)
-                setRedirect(true);
-            })
+        if(response.status == 200) {
+            setUserInfo(response)
+            setRedirect(true);
         }
         else {
             alert('wrong credentials');
