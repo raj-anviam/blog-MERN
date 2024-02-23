@@ -171,3 +171,15 @@ div.post-page a.edit-btn {
 a svg {
   height: 20px;
 }
+
+.info {
+  display: flex;
+  align-items: center;
+}
+
+.delete-btn {
+  width: fit-content;
+  padding: 1%;
+  justify-self: end;
+  background-color: red;
+}

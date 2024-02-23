@@ -12,6 +12,7 @@ export default function Header() {
         }).then(response => response.json().then(userInfo => {
             setUserInfo(userInfo);  
         }))
+        .catch(err => console.log(err, 'error') )
     }, [])
 
     function logout() {

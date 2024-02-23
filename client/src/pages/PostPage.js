@@ -3,7 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import { UserContext } from "../UserContext"
 import { Link } from "react-router-dom"
-import axios from "axios";
+import { useDispatch, useSelector } from 'react-redux';
+import { getCurrentPost } from '../features/post/postSlice';
 
 export default function PostPage() {
 
@@ -11,21 +12,27 @@ export default function PostPage() {
     const [post, setPost] = useState(null);
     const { userInfo }= useContext(UserContext);
 
+    const dispatch = useDispatch();
+    const currentPost = useSelector(state => state.currentPost);
+
     useEffect(() => {
-        axios.get(`http://localhost:4000/post/${id}`).then(post => {
-                    setPost(post.data)
-                })
-    }, [])
+        dispatch(getCurrentPost(id));
+
+        if (currentPost) {
+            setPost(currentPost)
+        }
+        
+    }, [currentPost, dispatch, id]);
     
     if(!post) return '';
     
     return (    
         <div className="post-page">
             <h1>{post.title}</h1>
-            <time>{format(new Date(post.createdAt), 'MMM d, yyyy HH:mm')}</time>
-            <div className="author">By @{post.author.username}</div>
+            <time>{post.createdAt && format(new Date(post.createdAt), 'MMM d, yyyy HH:mm')}</time>
+            <div className="author">By @{post?.author?.username}</div>
 
-            {userInfo.id === post.author._id && (
+            {userInfo.id === post?.author?._id && (
                 <div className="edit-row">
                     <Link className="edit-btn" to={`/edit/${post._id}`}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
