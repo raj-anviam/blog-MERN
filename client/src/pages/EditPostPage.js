@@ -7,7 +7,7 @@ import { editPost } from "../features/post/postSlice";
 
 export default function EditPostPage() {
     const { id } = useParams();
-    const post = useSelector(state => state.currentPost);
+    const post = useSelector(state => state.post.currentPost);
 
     const [title, setTitle] = useState('');
     const [summary, setSummary] = useState('');

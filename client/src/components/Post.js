@@ -1,14 +1,15 @@
 import {format} from 'date-fns';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { deletePost } from '../features/post/postSlice';
-import { UserContext } from "../UserContext"
-import { useContext } from 'react';
+// import { UserContext } from "../UserContext"
+// import { useContext } from 'react';
 
 export default function Post({_id, title, summary, cover, content, createdAt, author}) {
 
     const dispatch = useDispatch();
-    const {setUserInfo, userInfo} = useContext(UserContext);
+    // const {setUserInfo, userInfo} = useContext(UserContext);
+    const userInfo = useSelector(state => state.auth.user)
     
     return (
         <div className='post'>

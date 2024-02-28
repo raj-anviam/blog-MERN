@@ -8,7 +8,7 @@ import Loader from "../components/Loader";
 export default function IndexPage() {
 
     // const [posts, setPosts] = useState([]);
-    const posts = useSelector(state => state.posts);
+    const posts = useSelector(state => state.post.posts);
     const loading = useSelector(state => state.loading);
     const dispatch = useDispatch();
     

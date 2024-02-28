@@ -31,8 +31,6 @@ export const createPost = createAsyncThunk('create/post', async(payload, { rejec
     const response = await axios.post('/post', payload);
     return response;
   } catch (error) {
-    console.log(error);
-    
     if (error.response && error?.response?.status === 400) {
       return rejectWithValue({ errorMessage: error?.response?.data?.error, errorCode: 400 });
     }
@@ -71,9 +69,6 @@ const postSlice = createSlice({
       getCurrentPost: (state, payload) => {
         state.currentPost = state.posts.filter(post => post._id == payload.payload)[0]
       },
-      // deletePost: (state, payload) => {
-      //   state.posts = state.posts.filter(post => post._id !== payload.payload)
-      // },
     },
     extraReducers: (builder) => {
       builder
@@ -83,6 +78,10 @@ const postSlice = createSlice({
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.posts = action.payload.data;
         state.loading = false;
+      })
+      .addCase(fetchPosts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload ? action.payload.errorMessage : 'Error occurred';
       })
       .addCase(createPost.pending, (state, action) => {
         state.loading = true;
@@ -110,8 +109,6 @@ const postSlice = createSlice({
         state.loading = true;
       })
       .addCase(deletePost.fulfilled, (state, action) => {
-        console.log(action);
-
         state.posts = state.posts.filter(post => post._id !== action.payload.data.id)
         state.loading = false;
       })
@@ -125,6 +122,5 @@ const postSlice = createSlice({
     },
 })
   
-
 export const { getCurrentPost, getPostsFailure } = postSlice.actions
 export default postSlice.reducer

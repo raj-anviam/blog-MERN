@@ -1,26 +1,19 @@
 import { useContext, useEffect } from "react"
 import { Link } from "react-router-dom"
-import { UserContext } from "../UserContext"
+import { useDispatch, useSelector } from "react-redux";
+import { logout, profile } from "../features/auth/authSlice";
 
 export default function Header() {
 
-    const {setUserInfo, userInfo} = useContext(UserContext);
+    const userInfo = useSelector(state => state.auth.user);
+    const dispatch = useDispatch();
     
     useEffect(() => {
-        fetch('http://localhost:4000/profile', {
-            credentials: 'include'
-        }).then(response => response.json().then(userInfo => {
-            setUserInfo(userInfo);  
-        }))
-        .catch(err => console.log(err, 'error') )
+        dispatch(profile());
     }, [])
 
-    function logout() {
-        fetch('http://localhost:4000/logout', {
-            credentials: 'include',
-            method: 'POST'
-        });
-        setUserInfo(null);
+    function logoutHandler() {
+        dispatch(logout());
     }
 
     const username = userInfo?.username;
@@ -32,7 +25,7 @@ export default function Header() {
                 {username && (
                     <>
                         <Link to='/create'>Create New Article</Link>
-                        <a onClick={logout}>Logout</a>
+                        <a onClick={logoutHandler}>Logout</a>
                     </>
                 )}
                 {!username && (

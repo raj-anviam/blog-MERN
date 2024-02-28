@@ -1,21 +1,25 @@
 import { useContext, useState } from "react"
 import { Navigate } from "react-router-dom"
-import { UserContext } from "../UserContext";
-import axios from "axios";
+// import { UserContext } from "../UserContext";
+import { useDispatch } from "react-redux";
+import { login } from "../features/auth/authSlice";
+// import axios from "axios";
 
 export default function LoginPage() {
     let [username, setUsername] = useState('');
     let [password, setPassword] = useState('');
     let [redirect, setRedirect] = useState(false);
-    const {setUserInfo} = useContext(UserContext);
+    // const {setUserInfo} = useContext(UserContext);
+    const dispatch = useDispatch();
 
-    async function login(ev) {
+    async function submitHandler(ev) {
         ev.preventDefault();
 
-        const response = await axios.post('login', {username, password})
+        // const response = await axios.post('login', {username, password})
+        const response = await dispatch(login({username, password}))
 
-        if(response.status == 200) {
-            setUserInfo(response.data)
+        if(response.payload.status == 200) {
+            // dispatch(userInfo)
             setRedirect(true);
         }
         else {
@@ -28,7 +32,7 @@ export default function LoginPage() {
     }
     
     return (
-        <form className="login" onSubmit={login}>
+        <form className="login" onSubmit={submitHandler}>
             <h1>Login</h1>
             <input type="text" 
                 placeholder="username"

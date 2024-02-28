@@ -1,7 +1,7 @@
 import { format } from "date-fns";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
-import { UserContext } from "../UserContext"
+// import { UserContext } from "../UserContext"
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentPost } from '../features/post/postSlice';
@@ -10,10 +10,11 @@ export default function PostPage() {
 
     const {id} = useParams();
     const [post, setPost] = useState(null);
-    const { userInfo }= useContext(UserContext);
+    // const { userInfo }= useContext(UserContext);
+    const userInfo = useSelector(state => state.auth.user)
 
     const dispatch = useDispatch();
-    const currentPost = useSelector(state => state.currentPost);
+    const currentPost = useSelector(state => state.post.currentPost);
 
     useEffect(() => {
         dispatch(getCurrentPost(id));
